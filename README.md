@@ -1,4 +1,4 @@
-### HTML-to-img Downloader
+# HTML-to-img Downloader
 
 ## 📑 Description
 
