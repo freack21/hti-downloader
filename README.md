@@ -6,8 +6,6 @@ I have created a project [HTML-to-img](https://github.com/freack21/html-to-img) 
 
 ## 📚 Libraries
 
-## 📚 Libraries Used
-
 This project utilizes several [Node.js](https://nodejs.org/en) libraries:
 
 | Library          | Purpose                                                                                                                                                                                                         |
