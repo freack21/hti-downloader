@@ -1,11 +1,14 @@
-let executablePath = "C:/Program Files/Google/Chrome/Application/chrome.exe";
-//executablePath = "/usr/bin/google-chrome-stable";
-
+const fs = require("fs");
 const ENV = require("./env.json");
 const puppeteer = require("puppeteer-core");
 const express = require("express");
 const app = express();
-const PORT = 4065;
+const PORT = ENV.port || 3000;
+
+let executablePath = "C:/Program Files/Google/Chrome/Application/chrome.exe";
+if (!fs.existsSync(executablePath)) {
+  executablePath = ENV.executable_path;
+}
 
 app.use(express.json());
 app.use(
