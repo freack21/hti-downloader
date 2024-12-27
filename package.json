@@ -3,14 +3,20 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "html",
+    "to",
+    "image",
+    "download",
+    "scrape"
+  ],
+  "author": "Fikri Rivandi",
   "license": "ISC",
-  "description": "",
+  "description": "Project to do a scrapping assignment and take downloadable links from the images that have been created by html-to-img.",
   "dependencies": {
-    "axios": "^1.7.9",
     "express": "^4.21.2",
     "puppeteer-core": "^23.11.1"
   }
