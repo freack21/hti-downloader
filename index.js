@@ -32,6 +32,11 @@ const doDownload = async (req, res) => {
   Object.keys(req.body).forEach((key) => {
     data[key] = req.body[key];
   });
+  for (const key in data) {
+    if (data[key].startsWith("http")) {
+      data[key] = encodeURIComponent(data[key]);
+    }
+  }
 
   const result = await generate(path, data);
 
