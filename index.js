@@ -26,17 +26,14 @@ const doDownload = async (req, res) => {
 
   const data = {};
 
+  // Gabungkan query params dan body
   Object.keys(req.query).forEach((key) => {
     data[key] = req.query[key];
   });
   Object.keys(req.body).forEach((key) => {
     data[key] = req.body[key];
   });
-  for (const key in data) {
-    if (data[key].startsWith("http")) {
-      data[key] = encodeURIComponent(data[key]);
-    }
-  }
+  // Tidak perlu encode karena data akan dikirim sebagai JSON body
 
   const result = await generate(path, data);
 
@@ -65,13 +62,29 @@ const openBrowser = async () => {
 
 const generate = async (path, data) => {
   try {
-    const query = Object.keys(data)
-      .map((key) => `${key}=${data[key]}`)
-      .join("&");
-
     const page = await browser.newPage();
 
-    const url = `${ENV.base_url}/${path}?${query}`;
+    const url = `${ENV.base_url}/${path}`;
+
+    // Intercept request pertama dan ubah jadi POST
+    await page.setRequestInterception(true);
+
+    let isFirstRequest = true;
+    page.on("request", (request) => {
+      if (isFirstRequest && request.url() === url) {
+        isFirstRequest = false;
+        request.continue({
+          method: "POST",
+          postData: JSON.stringify(data),
+          headers: {
+            ...request.headers(),
+            "Content-Type": "application/json",
+          },
+        });
+      } else {
+        request.continue();
+      }
+    });
 
     await page.goto(url, {
       waitUntil: "networkidle2",
